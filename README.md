@@ -49,3 +49,6 @@ Traceback (most recent call last):
   File "maze.py", line 25, in <module>
     import  wx
 ModuleNotFoundError: No module named 'wx'
+
+  * scipy 설치
+    * sudo apt install python3-scipy
