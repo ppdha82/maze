@@ -17,7 +17,7 @@ from    struct import *
 from    array import *
 from    math  import *
 import  re
-import  threading
+import  _thread
 from    scipy import integrate
 import  numpy as N
 

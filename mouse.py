@@ -17,7 +17,7 @@ from    array import *
 from    math  import *
 from    scipy import integrate
 import  re
-import  threading
+import  _thread
 import  queue
 
 import  wx
@@ -1666,7 +1666,7 @@ class Mouse(MouseBrain):
 
     def MouseStart(self):
         self.Running = True
-        threading._start_new_thread ( self.MouseMain, () )
+        _thread.start_new_thread ( self.MouseMain, () )
 
     def Pause(self, wait = False):
         run = self.IsRunning ()
