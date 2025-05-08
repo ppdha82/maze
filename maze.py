@@ -1952,17 +1952,18 @@ class AppFrame(wx.Frame):
     def __init__(self, parent, title):
         # create frame
         frame = wx.Frame.__init__(self, parent, ID_WINDOW_TOP_LEVEL, title, size=FRAME_SIZE)
+        print("[", inspect.getfile(inspect.currentframe()), ":", inspect.currentframe().f_lineno, "] frame", frame)
 
-        # Prepare the menu bar
-        menuBar = wx.MenuBar()
-
-        # 1st menu from left
-        # menu1 = wx.Menu()
-        # menu1.Append(ID_MENU_FILE_OPEN, "&Open", "Open Maze")
-        # menu1.Append(ID_MENU_FILE_SETUP, "&Setting", "Set up maze") 
-        # menu1.Append(ID_MENU_FILE_EXIT, "E&xit", "Exit")
-        # menuBar.Append(menu1, "&File")
-        # self.SetMenuBar(menuBar)
+        if False:
+            # Prepare the menu bar
+            menuBar = wx.MenuBar()
+            # 1st menu from left
+            menu1 = wx.Menu()
+            menu1.Append(ID_MENU_FILE_OPEN, "&Open", "Open Maze")
+            menu1.Append(ID_MENU_FILE_SETUP, "&Setting", "Set up maze") 
+            menu1.Append(ID_MENU_FILE_EXIT, "E&xit", "Exit")
+            menuBar.Append(menu1, "&File")
+            self.SetMenuBar(menuBar)
 
         # create status bar
         self.m_status = self.CreateStatusBar(1)
@@ -2001,8 +2002,10 @@ class AppFrame(wx.Frame):
         print("Frame KeyDown=", keycode)
 
     def PostInit(self):
+        print("[", inspect.getfile(inspect.currentframe()), ":", inspect.currentframe().f_lineno, "] PostInit")
         maze = wx.FindWindowById ( ID_WINDOW_MAZE, None )
         if maze:
+            print("[", inspect.getfile(inspect.currentframe()), ":", inspect.currentframe().f_lineno, "] type(maze)", type(maze))
             maze.PostInit ()
 
     def OnCloseApp(self, event):
@@ -2018,12 +2021,13 @@ AppTitle = "GSDSim3 Micro Mouse Simulator"
 
 # Program Start
 class AppMain(wx.App):
-    print("Program Start")
+    print("[", inspect.getfile(inspect.currentframe()), ":", inspect.currentframe().f_lineno, "] Program Start")
     def OnInit(self):
         frame = AppFrame(None, AppTitle)
+        print("[", inspect.getfile(inspect.currentframe()), ":", inspect.currentframe().f_lineno, "] frame", frame)
         self.SetTopWindow(frame)
         frame.Show (True)
-        frame.PostInit () 
+        frame.PostInit ()
         return True
 
 #-------------------------------------------------------------------------------
