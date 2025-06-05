@@ -20,7 +20,7 @@ class MainWindow(QMainWindow):
             self.statusBar.addWidget(self.label)
 
         self.setGeometry(300, 300, 400, 300)
-        self.setWindowTitle('Status Window')
+        self.setWindowTitle('Menubar')
 
 
 class MyApp(QWidget):
