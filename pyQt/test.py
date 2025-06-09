@@ -1,10 +1,10 @@
 import sys
-from PyQt5.QtWidgets import QApplication, QWidget, QPushButton, QToolTip, QStatusBar, QMainWindow, QLabel, QAction, qApp
+from PyQt5.QtWidgets import QApplication, QWidget, QPushButton, QToolTip, QStatusBar, QMainWindow, QLabel, QAction, qApp, QDesktopWidget
 from PyQt5.QtGui import QIcon, QFont
 from PyQt5.QtCore import QCoreApplication, Qt
 
 statusBarOption = 1 # != 1
-window_option = 'QMainwindow' # 'QWidget'
+window_option = 'QWidget' # 'QMainwindow'
 
 class MainWindow(QMainWindow):
     def __init__(self):
@@ -75,8 +75,19 @@ class MyApp(QWidget):
         # chap 2
         self.setWindowTitle('Tooltips')
         self.setWindowIcon(QIcon('web.png'))
-        self.setGeometry(300, 300, 500, 400)
+
+        # chap 8
+        # self.setGeometry(300, 300, 500, 400)
+        self.resize(500, 350)
+        self.center()
         self.show()
+
+    # chap 8
+    def center(self):
+        qr = self.frameGeometry()
+        cp = QDesktopWidget().availableGeometry().center()
+        qr.moveCenter(cp)
+        self.move(qr.topLeft())
 
 if __name__ == '__main__':
     app = QApplication(sys.argv)
