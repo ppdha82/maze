@@ -1,10 +1,10 @@
 import sys
-from PyQt5.QtWidgets import QApplication, QWidget, QPushButton, QToolTip, QStatusBar, QMainWindow, QLabel, QAction, qApp, QDesktopWidget
+from PyQt5.QtWidgets import QApplication, QWidget, QPushButton, QToolTip, QStatusBar, QMainWindow, QLabel, QAction, qApp, QDesktopWidget, QVBoxLayout
 from PyQt5.QtGui import QIcon, QFont
 from PyQt5.QtCore import QCoreApplication, Qt, QDate
 
 statusBarOption = 1 # != 1
-window_option = 'QMainwindow' # 'QWidget'
+window_option = 'QWidget' # 'QMainwindow'
 
 class MainWindow(QMainWindow):
     def __init__(self):
@@ -79,13 +79,39 @@ class MyApp(QWidget):
         btn.clicked.connect(QCoreApplication.instance().quit)
 
         # chap 2
-        self.setWindowTitle('Tooltips')
         self.setWindowIcon(QIcon('web.png'))
 
         # chap 8
         # self.setGeometry(300, 300, 500, 400)
         self.resize(500, 350)
         self.center()
+
+        # chap 10
+        lbl_red = QLabel('Red')
+        lbl_green = QLabel('Green')
+        lbl_blue = QLabel('Blue')
+
+        lbl_red.setStyleSheet("color: red;"
+                              "border-style: solid;"
+                              "border-width: 2px;"
+                              "border-color: #FA8072;"
+                              "border-radius: 3px")
+        lbl_green.setStyleSheet("color: green;"
+                              "background-color: #7FFFD4")
+        lbl_blue.setStyleSheet("color: blue;"
+                              "background-color: #87CEF4;"
+                              "border-style: dashed;"
+                              "border-width: 3px;"
+                              "border-color: #1E90FF;")
+        
+        vbox = QVBoxLayout()
+        vbox.addWidget(lbl_red)
+        vbox.addWidget(lbl_green)
+        vbox.addWidget(lbl_blue)
+
+        self.setLayout(vbox)
+
+        self.setWindowTitle('Stylesheet')
         self.show()
 
     # chap 8
