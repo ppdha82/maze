@@ -1,10 +1,10 @@
 import sys
 from PyQt5.QtWidgets import QApplication, QWidget, QPushButton, QToolTip, QStatusBar, QMainWindow, QLabel, QAction, qApp, QDesktopWidget
 from PyQt5.QtGui import QIcon, QFont
-from PyQt5.QtCore import QCoreApplication, Qt
+from PyQt5.QtCore import QCoreApplication, Qt, QDate
 
 statusBarOption = 1 # != 1
-window_option = 'QWidget' # 'QMainwindow'
+window_option = 'QMainwindow' # 'QWidget'
 
 class MainWindow(QMainWindow):
     def __init__(self):
@@ -12,6 +12,9 @@ class MainWindow(QMainWindow):
         # chap 5
         self.statusBar = QStatusBar()
         self.setStatusBar(self.statusBar)
+
+        # chap 9
+        self.date = QDate.currentDate()
 
         self.initUI()
 
@@ -51,8 +54,11 @@ class MainWindow(QMainWindow):
 
         self.toolbar.addAction(exitAction)
 
+        # chap 9
+        self.statusBar.showMessage(self.date.toString(Qt.DefaultLocaleLongDate))
+
         self.setGeometry(300, 300, 400, 300)
-        self.setWindowTitle('Toolbar')
+        self.setWindowTitle('Date')
 
 
 class MyApp(QWidget):
