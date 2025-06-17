@@ -1,6 +1,7 @@
 import sys
-from PyQt5.QtWidgets import QApplication, QWidget, QLabel, QPushButton, QHBoxLayout, QVBoxLayout
+from PyQt5.QtWidgets import QApplication, QWidget, QLabel, QPushButton, QHBoxLayout, QVBoxLayout, QGridLayout, QLineEdit
 
+layoutOption = 'QGridLayout' # BoxQLayout
 class MyApp(QWidget):
     def __init__(self):
         super().__init__()
@@ -19,23 +20,37 @@ class MyApp(QWidget):
         btn2.move(80, 53)
 
         # chap 04.02
-        okButton = QPushButton('OK')
-        cancelButton = QPushButton('Cancel')
+        if(layoutOption == 'BoxLayout'):
+            okButton = QPushButton('OK')
+            cancelButton = QPushButton('Cancel')
 
-        hbox = QHBoxLayout()
-        hbox.addStretch(1)
-        hbox.addWidget(okButton)
-        hbox.addWidget(cancelButton)
-        hbox.addStretch(1)
+            hbox = QHBoxLayout()
+            hbox.addStretch(1)
+            hbox.addWidget(okButton)
+            hbox.addWidget(cancelButton)
+            hbox.addStretch(1)
 
-        vbox = QVBoxLayout()
-        vbox.addStretch(1)
-        vbox.addLayout(hbox)
-        vbox.addStretch(1)
+            vbox = QVBoxLayout()
+            vbox.addStretch(1)
+            vbox.addLayout(hbox)
+            vbox.addStretch(1)
 
-        self.setLayout(vbox)
+            self.setLayout(vbox)
 
-        self.setWindowTitle('Box Layout')
+        # chap 04.03
+        elif(layoutOption == 'QGridLayout'):
+            grid = QGridLayout()
+            self.setLayout(grid)
+
+            grid.addWidget(QLabel('Title:'), 0, 0)
+            grid.addWidget(QLabel('Author:'), 1, 0)
+            grid.addWidget(QLabel('Review:'), 2, 0)
+
+            grid.addWidget(QLineEdit(), 0, 1)
+            grid.addWidget(QLineEdit(), 1, 1)
+            grid.addWidget(QLineEdit(), 2, 1)
+
+        self.setWindowTitle('QGridLayout')
         self.setGeometry(300, 300, 500, 200)
         self.show()
 
