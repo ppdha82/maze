@@ -1,5 +1,5 @@
 import sys
-from PyQt5.QtWidgets import QApplication, QWidget, QLabel, QPushButton
+from PyQt5.QtWidgets import QApplication, QWidget, QLabel, QPushButton, QHBoxLayout, QVBoxLayout
 
 class MyApp(QWidget):
     def __init__(self):
@@ -18,7 +18,24 @@ class MyApp(QWidget):
         btn2 = QPushButton('Button2', self)
         btn2.move(80, 53)
 
-        self.setWindowTitle('Absolute Positioning')
+        # chap 04.02
+        okButton = QPushButton('OK')
+        cancelButton = QPushButton('Cancel')
+
+        hbox = QHBoxLayout()
+        hbox.addStretch(1)
+        hbox.addWidget(okButton)
+        hbox.addWidget(cancelButton)
+        hbox.addStretch(1)
+
+        vbox = QVBoxLayout()
+        vbox.addStretch(1)
+        vbox.addLayout(hbox)
+        vbox.addStretch(1)
+
+        self.setLayout(vbox)
+
+        self.setWindowTitle('Box Layout')
         self.setGeometry(300, 300, 500, 200)
         self.show()
 
