@@ -1,8 +1,8 @@
 import sys
-from PyQt5.QtWidgets import QApplication, QWidget, QPushButton, QVBoxLayout, QLabel, QCheckBox, QRadioButton, QComboBox
+from PyQt5.QtWidgets import QApplication, QWidget, QPushButton, QVBoxLayout, QLabel, QCheckBox, QRadioButton, QComboBox, QLineEdit
 from PyQt5.QtCore import Qt
 
-layoutOption = 'QComboBox' # 'QPushButton', 'QLabel'. 'QCheckBox', 'QRadioButton'
+layoutOption = 'QLineEdit' # 'QPushButton', 'QLabel'. 'QCheckBox', 'QRadioButton', 'QComboBox'
 class MyApp(QWidget):
     def __init__(self):
         super().__init__()
@@ -90,6 +90,17 @@ class MyApp(QWidget):
             cb.activated[str].connect(self.onActivated)
 
             self.setWindowTitle('QComboBox')
+
+        # chapter 05.06
+        elif(layoutOption == 'QLineEdit'):
+            self.lbl = QLabel(self)
+            self.lbl.move(60, 40)
+
+            qle = QLineEdit(self)
+            qle.move(60, 100)
+            qle.textChanged[str].connect(self.onChanged)
+
+            self.setWindowTitle('QLineEdit')
     
         self.setGeometry(300, 300, 500, 200)
         self.show()
@@ -106,6 +117,11 @@ class MyApp(QWidget):
         self.lbl.setText(text)
         self.lbl.adjustSize()
 
+    # chapter 05.06
+    def onChanged(self, text):
+        self.lbl.setText(text)
+        self.lbl.adjustSize()
+        
 if __name__ == '__main__':
     app = QApplication(sys.argv)
     ex = MyApp()
