@@ -1,8 +1,8 @@
 import sys
-from PyQt5.QtWidgets import QApplication, QWidget, QPushButton, QVBoxLayout, QLabel, QCheckBox
+from PyQt5.QtWidgets import QApplication, QWidget, QPushButton, QVBoxLayout, QLabel, QCheckBox, QRadioButton
 from PyQt5.QtCore import Qt
 
-layoutOption = 'QCheckBox' # 'QPushButton', 'QLabel'
+layoutOption = 'QRadioButton' # 'QPushButton', 'QLabel'. 'QCheckBox'
 class MyApp(QWidget):
     def __init__(self):
         super().__init__()
@@ -62,6 +62,18 @@ class MyApp(QWidget):
             cb.stateChanged.connect(self.changeTitle)
 
             self.setWindowTitle('QCheckBox')
+
+        # chpater 05.04
+        elif(layoutOption == 'QRadioButton'):
+            rbtn1 = QRadioButton('First Button', self)
+            rbtn1.move(50, 50)
+            rbtn1.setChecked(True)
+
+            rbtn2 = QRadioButton(self)
+            rbtn2.move(50, 70)
+            rbtn2.setText('Second Button')
+
+            self.setWindowTitle('QRadioButton')
 
         self.setGeometry(300, 300, 500, 200)
         self.show()
