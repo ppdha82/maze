@@ -1,8 +1,8 @@
 import sys
-from PyQt5.QtWidgets import QApplication, QWidget, QPushButton, QVBoxLayout, QLabel, QCheckBox, QRadioButton, QComboBox, QLineEdit
-from PyQt5.QtCore import Qt
+from PyQt5.QtWidgets import QApplication, QWidget, QPushButton, QVBoxLayout, QLabel, QCheckBox, QRadioButton, QComboBox, QLineEdit, QProgressBar
+from PyQt5.QtCore import Qt, QBasicTimer
 
-layoutOption = 'QLineEdit' # 'QPushButton', 'QLabel'. 'QCheckBox', 'QRadioButton', 'QComboBox'
+layoutOption = 'QProgressBar' # 'QPushButton', 'QLabel'. 'QCheckBox', 'QRadioButton', 'QComboBox', 'QLineEdit'
 class MyApp(QWidget):
     def __init__(self):
         super().__init__()
@@ -101,6 +101,20 @@ class MyApp(QWidget):
             qle.textChanged[str].connect(self.onChanged)
 
             self.setWindowTitle('QLineEdit')
+
+        # chapter 05.07
+        elif(layoutOption == 'QProgressBar'):
+            self.pbar = QProgressBar(self)
+            self.pbar.setGeometry(30, 40, 200, 25)
+
+            self.btn = QPushButton('Start', self)
+            self.btn.move(40, 80)
+            self.btn.clicked.connect(self.doAction)
+
+            self.timer = QBasicTimer()
+            self.step = 0
+
+            self.setWindowTitle('QProgressBar')
     
         self.setGeometry(300, 300, 500, 200)
         self.show()
@@ -121,7 +135,30 @@ class MyApp(QWidget):
     def onChanged(self, text):
         self.lbl.setText(text)
         self.lbl.adjustSize()
+
+    # chapter 05.07
+    def timerEvent(self, e):
+        if(self.step >= 100):
+            self.timer.stop()
+            self.btn.setText('Finished')
+            return
         
+        self.step = self.step + 1
+        self.pbar.setValue(self.step)
+
+    def doAction(self):
+        if(self.timer.isActive()):
+            self.timer.stop()
+            self.btn.setText('Start')
+        else:
+            if(self.btn.text() == 'Finished'):
+                self.step = 0
+                self.btn.setText('Start')
+                self.pbar.setValue(self.step)
+            else:
+                self.timer.start(100, self)
+                self.btn.setText('Stop')
+
 if __name__ == '__main__':
     app = QApplication(sys.argv)
     ex = MyApp()
