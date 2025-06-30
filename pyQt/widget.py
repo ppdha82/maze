@@ -1,8 +1,8 @@
 import sys
-from PyQt5.QtWidgets import QApplication, QWidget, QPushButton, QVBoxLayout, QLabel, QCheckBox, QRadioButton, QComboBox, QLineEdit, QProgressBar, QDial, QSlider
+from PyQt5.QtWidgets import QApplication, QWidget, QPushButton, QVBoxLayout, QLabel, QCheckBox, QRadioButton, QComboBox, QLineEdit, QProgressBar, QDial, QSlider, QSplitter, QFrame, QHBoxLayout
 from PyQt5.QtCore import Qt, QBasicTimer
 
-layoutOption = 'QSlider_QDial' # 'QPushButton', 'QLabel'. 'QCheckBox', 'QRadioButton', 'QComboBox', 'QLineEdit', 'QProgressBar'
+layoutOption = 'QSplitter' # 'QPushButton', 'QLabel'. 'QCheckBox', 'QRadioButton', 'QComboBox', 'QLineEdit', 'QProgressBar', 'QSlider_QDial'
 class MyApp(QWidget):
     def __init__(self):
         super().__init__()
@@ -122,6 +122,35 @@ class MyApp(QWidget):
             self.slider.valueChanged.connect(self.dial.setValue)
             self.dial.valueChanged.connect(self.slider.setValue)
             btn.clicked.connect(self.button_clicked)
+
+        # chapter 05.09
+        elif(layoutOption == 'QSplitter'):
+            hbox = QHBoxLayout()
+
+            top = QFrame()
+            top.setFrameShape(QFrame.Box)
+
+            midLeft = QFrame()
+            midLeft.setFrameShape(QFrame.StyledPanel)
+
+            midRight = QFrame()
+            midRight.setFrameShape(QFrame.Panel)
+
+            bottom = QFrame()
+            bottom.setFrameShape(QFrame.WinPanel)
+            bottom.setFrameShadow(QFrame.Sunken)
+
+            splitter1 = QSplitter(Qt.Horizontal)
+            splitter1.addWidget(midLeft)
+            splitter1.addWidget(midRight)
+
+            splitter2 = QSplitter(Qt.Vertical)
+            splitter2.addWidget(top)
+            splitter2.addWidget(splitter1)
+            splitter2.addWidget(bottom)
+
+            hbox.addWidget(splitter2)
+            self.setLayout(hbox)
     
         self.setWindowTitle(layoutOption)
         self.setGeometry(300, 300, 500, 200)
