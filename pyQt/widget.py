@@ -1,8 +1,8 @@
 import sys
-from PyQt5.QtWidgets import QApplication, QWidget, QPushButton, QVBoxLayout, QLabel, QCheckBox, QRadioButton, QComboBox, QLineEdit, QProgressBar
+from PyQt5.QtWidgets import QApplication, QWidget, QPushButton, QVBoxLayout, QLabel, QCheckBox, QRadioButton, QComboBox, QLineEdit, QProgressBar, QDial, QSlider
 from PyQt5.QtCore import Qt, QBasicTimer
 
-layoutOption = 'QProgressBar' # 'QPushButton', 'QLabel'. 'QCheckBox', 'QRadioButton', 'QComboBox', 'QLineEdit'
+layoutOption = 'QSlider_QDial' # 'QPushButton', 'QLabel'. 'QCheckBox', 'QRadioButton', 'QComboBox', 'QLineEdit', 'QProgressBar'
 class MyApp(QWidget):
     def __init__(self):
         super().__init__()
@@ -103,6 +103,25 @@ class MyApp(QWidget):
 
             self.timer = QBasicTimer()
             self.step = 0
+
+        # chapter 05.08
+        elif(layoutOption == 'QSlider_QDial'):
+            self.slider = QSlider(Qt.Horizontal, self)
+            self.slider.move(30, 30)
+            self.slider.setRange(0, 50)
+            self.slider.setSingleStep(2)
+
+            self.dial = QDial(self)
+            self.dial.move(30, 50)
+            self.dial.setRange(0, 50)
+            self.dial.setNotchesVisible(True)
+
+            btn = QPushButton('Default',self)
+            btn.move(35, 160)
+
+            self.slider.valueChanged.connect(self.dial.setValue)
+            self.dial.valueChanged.connect(self.slider.setValue)
+            btn.clicked.connect(self.button_clicked)
     
         self.setWindowTitle(layoutOption)
         self.setGeometry(300, 300, 500, 200)
@@ -147,6 +166,11 @@ class MyApp(QWidget):
             else:
                 self.timer.start(100, self)
                 self.btn.setText('Stop')
+
+    # chapter 05.08
+    def button_clicked(self):
+        self.slider.setValue(0)
+        self.dial.setValue(0)
 
 if __name__ == '__main__':
     app = QApplication(sys.argv)
