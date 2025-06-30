@@ -27,7 +27,6 @@ class MyApp(QWidget):
             vbox.addWidget(btn3)
 
             self.setLayout(vbox)
-            self.setWindowTitle('QPushButton')
 
         # chapter 05.02
         elif(layoutOption == 'QLabel'):
@@ -52,7 +51,6 @@ class MyApp(QWidget):
             layout.addWidget(label2)
 
             self.setLayout(layout)
-            self.setWindowTitle('QLabel')
 
         # chpater 05.03
         elif(layoutOption == 'QCheckBox'):
@@ -60,8 +58,6 @@ class MyApp(QWidget):
             cb.move(20, 20)
             cb.toggle()
             cb.stateChanged.connect(self.changeTitle)
-
-            self.setWindowTitle('QCheckBox')
 
         # chpater 05.04
         elif(layoutOption == 'QRadioButton'):
@@ -72,8 +68,6 @@ class MyApp(QWidget):
             rbtn2 = QRadioButton(self)
             rbtn2.move(50, 70)
             rbtn2.setText('Second Button')
-
-            self.setWindowTitle('QRadioButton')
 
         # chapter 05.05
         elif(layoutOption == 'QComboBox'):
@@ -89,8 +83,6 @@ class MyApp(QWidget):
 
             cb.activated[str].connect(self.onActivated)
 
-            self.setWindowTitle('QComboBox')
-
         # chapter 05.06
         elif(layoutOption == 'QLineEdit'):
             self.lbl = QLabel(self)
@@ -99,8 +91,6 @@ class MyApp(QWidget):
             qle = QLineEdit(self)
             qle.move(60, 100)
             qle.textChanged[str].connect(self.onChanged)
-
-            self.setWindowTitle('QLineEdit')
 
         # chapter 05.07
         elif(layoutOption == 'QProgressBar'):
@@ -113,9 +103,8 @@ class MyApp(QWidget):
 
             self.timer = QBasicTimer()
             self.step = 0
-
-            self.setWindowTitle('QProgressBar')
     
+        self.setWindowTitle(layoutOption)
         self.setGeometry(300, 300, 500, 200)
         self.show()
 
