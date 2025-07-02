@@ -1,8 +1,8 @@
 import sys
-from PyQt5.QtWidgets import QApplication, QWidget, QPushButton, QVBoxLayout, QLabel, QCheckBox, QRadioButton, QComboBox, QLineEdit, QProgressBar, QDial, QSlider, QSplitter, QFrame, QHBoxLayout, QGroupBox, QGridLayout, QMenu
+from PyQt5.QtWidgets import QApplication, QWidget, QPushButton, QVBoxLayout, QLabel, QCheckBox, QRadioButton, QComboBox, QLineEdit, QProgressBar, QDial, QSlider, QSplitter, QFrame, QHBoxLayout, QGroupBox, QGridLayout, QMenu, QTabWidget
 from PyQt5.QtCore import Qt, QBasicTimer
 
-layoutOption = 'QGroupBox' # 'QPushButton', 'QLabel'. 'QCheckBox', 'QRadioButton', 'QComboBox', 'QLineEdit', 'QProgressBar', 'QSlider_QDial', 'QSplitter'
+layoutOption = 'QTabWidget' # 'QPushButton', 'QLabel'. 'QCheckBox', 'QRadioButton', 'QComboBox', 'QLineEdit', 'QProgressBar', 'QSlider_QDial', 'QSplitter', 'QGroupBox'
 class MyApp(QWidget):
     def __init__(self):
         super().__init__()
@@ -161,6 +161,28 @@ class MyApp(QWidget):
             grid.addWidget(self.createPushButtonGroup(), 1, 1)
 
             self.setLayout(grid)
+
+        # chapter 05.11
+        elif(layoutOption == 'QTabWidget'):
+            grid = QGridLayout()
+            grid.addWidget(self.createFirstExclusiveGroup(), 0, 0)
+            grid.addWidget(self.createSecondExclusiveGroup(), 1, 0)
+            grid.addWidget(self.createNonExclusiveGroup(), 0, 1)
+            grid.addWidget(self.createPushButtonGroup(), 1, 1)
+
+            tab1 = QWidget()
+            tab2 = QWidget()
+
+            tab1.setLayout(grid)
+
+            tabs = QTabWidget()
+            tabs.addTab(tab1, 'Tab1')
+            tabs.addTab(tab2, 'Tab2')
+
+            vbox = QVBoxLayout()
+            vbox.addWidget(tabs)
+
+            self.setLayout(vbox)
     
         self.setWindowTitle(layoutOption)
         self.setGeometry(300, 300, 500, 200)
