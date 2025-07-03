@@ -1,8 +1,9 @@
 import sys
 from PyQt5.QtWidgets import QApplication, QWidget, QPushButton, QVBoxLayout, QLabel, QCheckBox, QRadioButton, QComboBox, QLineEdit, QProgressBar, QDial, QSlider, QSplitter, QFrame, QHBoxLayout, QGroupBox, QGridLayout, QMenu, QTabWidget
+from PyQt5.QtGui import QPixmap
 from PyQt5.QtCore import Qt, QBasicTimer
 
-layoutOption = 'QTabWidget' # 'QPushButton', 'QLabel'. 'QCheckBox', 'QRadioButton', 'QComboBox', 'QLineEdit', 'QProgressBar', 'QSlider_QDial', 'QSplitter', 'QGroupBox'
+layoutOption = 'QPixmap' # 'QPushButton', 'QLabel'. 'QCheckBox', 'QRadioButton', 'QComboBox', 'QLineEdit', 'QProgressBar', 'QSlider_QDial', 'QSplitter', 'QGroupBox', 'QTabWidget'
 class MyApp(QWidget):
     def __init__(self):
         super().__init__()
@@ -183,6 +184,21 @@ class MyApp(QWidget):
             vbox.addWidget(tabs)
 
             self.setLayout(vbox)
+
+        # chapter 05.12
+        elif(layoutOption == 'QPixmap'):
+            pixmap = QPixmap('landscape.jpg')
+            
+            lbl_img = QLabel()
+            lbl_img.setPixmap(pixmap)
+            lbl_size = QLabel('Width: ' + str(pixmap.width()) + ', Height: ' + str(pixmap.height()))
+            lbl_size.setAlignment(Qt.AlignCenter)
+
+            vbox = QVBoxLayout()
+            vbox.addWidget(lbl_img)
+            vbox.addWidget(lbl_size)
+            self.setLayout(vbox)
+            pass
     
         self.setWindowTitle(layoutOption)
         self.setGeometry(300, 300, 500, 200)
