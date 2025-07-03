@@ -1,9 +1,9 @@
 import sys
-from PyQt5.QtWidgets import QApplication, QWidget, QPushButton, QVBoxLayout, QLabel, QCheckBox, QRadioButton, QComboBox, QLineEdit, QProgressBar, QDial, QSlider, QSplitter, QFrame, QHBoxLayout, QGroupBox, QGridLayout, QMenu, QTabWidget
+from PyQt5.QtWidgets import QApplication, QWidget, QPushButton, QVBoxLayout, QLabel, QCheckBox, QRadioButton, QComboBox, QLineEdit, QProgressBar, QDial, QSlider, QSplitter, QFrame, QHBoxLayout, QGroupBox, QGridLayout, QMenu, QTabWidget, QCalendarWidget
 from PyQt5.QtGui import QPixmap
-from PyQt5.QtCore import Qt, QBasicTimer
+from PyQt5.QtCore import Qt, QBasicTimer, QDate
 
-layoutOption = 'QPixmap' # 'QPushButton', 'QLabel'. 'QCheckBox', 'QRadioButton', 'QComboBox', 'QLineEdit', 'QProgressBar', 'QSlider_QDial', 'QSplitter', 'QGroupBox', 'QTabWidget'
+layoutOption = 'QCalendarWidget' # 'QPushButton', 'QLabel'. 'QCheckBox', 'QRadioButton', 'QComboBox', 'QLineEdit', 'QProgressBar', 'QSlider_QDial', 'QSplitter', 'QGroupBox', 'QTabWidget', 'QPixmap'
 class MyApp(QWidget):
     def __init__(self):
         super().__init__()
@@ -198,6 +198,22 @@ class MyApp(QWidget):
             vbox.addWidget(lbl_img)
             vbox.addWidget(lbl_size)
             self.setLayout(vbox)
+        
+        # chapter 05.13
+        elif(layoutOption == 'QCalendarWidget'):
+            cal = QCalendarWidget(self)
+            cal.setGridVisible(True)
+            cal.clicked[QDate].connect(self.showDate)
+
+            self.lbl = QLabel(self)
+            date = cal.selectedDate()
+            self.lbl.setText(date.toString())
+
+            vbox = QVBoxLayout()
+            vbox.addWidget(cal)
+            vbox.addWidget(self.lbl)
+
+            self.setLayout(vbox)
             pass
     
         self.setWindowTitle(layoutOption)
@@ -334,6 +350,10 @@ class MyApp(QWidget):
         groupbox.setLayout(vbox)
 
         return groupbox
+    
+    # chapter 05.13
+    def showDate(self, date):
+        self.lbl.setText(date.toString())
 
 if __name__ == '__main__':
     app = QApplication(sys.argv)
