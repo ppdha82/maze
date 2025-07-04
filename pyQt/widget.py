@@ -1,9 +1,9 @@
 import sys
-from PyQt5.QtWidgets import QApplication, QWidget, QPushButton, QVBoxLayout, QLabel, QCheckBox, QRadioButton, QComboBox, QLineEdit, QProgressBar, QDial, QSlider, QSplitter, QFrame, QHBoxLayout, QGroupBox, QGridLayout, QMenu, QTabWidget, QCalendarWidget
+from PyQt5.QtWidgets import QApplication, QWidget, QPushButton, QVBoxLayout, QLabel, QCheckBox, QRadioButton, QComboBox, QLineEdit, QProgressBar, QDial, QSlider, QSplitter, QFrame, QHBoxLayout, QGroupBox, QGridLayout, QMenu, QTabWidget, QCalendarWidget, QSpinBox
 from PyQt5.QtGui import QPixmap
 from PyQt5.QtCore import Qt, QBasicTimer, QDate
 
-layoutOption = 'QCalendarWidget' # 'QPushButton', 'QLabel'. 'QCheckBox', 'QRadioButton', 'QComboBox', 'QLineEdit', 'QProgressBar', 'QSlider_QDial', 'QSplitter', 'QGroupBox', 'QTabWidget', 'QPixmap'
+layoutOption = 'QSpinBox' # 'QPushButton', 'QLabel'. 'QCheckBox', 'QRadioButton', 'QComboBox', 'QLineEdit', 'QProgressBar', 'QSlider_QDial', 'QSplitter', 'QGroupBox', 'QTabWidget', 'QPixmap', 'QCalendarWidget'
 class MyApp(QWidget):
     def __init__(self):
         super().__init__()
@@ -214,6 +214,26 @@ class MyApp(QWidget):
             vbox.addWidget(self.lbl)
 
             self.setLayout(vbox)
+
+        # chapter 05.14
+        elif(layoutOption == 'QSpinBox'):
+            self.lbl1 = QLabel('QSpinBox')
+            self.spinbox = QSpinBox()
+            self.spinbox.setMinimum(-10)
+            self.spinbox.setMaximum(30)
+            self.spinbox.setSingleStep(2)
+            self.lbl2 = QLabel('0')
+
+            self.spinbox.valueChanged.connect(self.value_changed)
+
+            vbox = QVBoxLayout()
+            vbox.addWidget(self.lbl1)
+            vbox.addWidget(self.spinbox)
+            vbox.addWidget(self.lbl2)
+            vbox.addStretch()
+
+            self.setLayout(vbox)
+
             pass
     
         self.setWindowTitle(layoutOption)
@@ -354,6 +374,10 @@ class MyApp(QWidget):
     # chapter 05.13
     def showDate(self, date):
         self.lbl.setText(date.toString())
+
+    # chapter 05.14
+    def value_changed(self):
+        self.lbl2.setText(str(self.spinbox.value()))
 
 if __name__ == '__main__':
     app = QApplication(sys.argv)
