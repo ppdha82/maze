@@ -1,9 +1,9 @@
 import sys
-from PyQt5.QtWidgets import QApplication, QWidget, QPushButton, QVBoxLayout, QLabel, QCheckBox, QRadioButton, QComboBox, QLineEdit, QProgressBar, QDial, QSlider, QSplitter, QFrame, QHBoxLayout, QGroupBox, QGridLayout, QMenu, QTabWidget, QCalendarWidget, QSpinBox, QDoubleSpinBox, QDateEdit
+from PyQt5.QtWidgets import QApplication, QWidget, QPushButton, QVBoxLayout, QLabel, QCheckBox, QRadioButton, QComboBox, QLineEdit, QProgressBar, QDial, QSlider, QSplitter, QFrame, QHBoxLayout, QGroupBox, QGridLayout, QMenu, QTabWidget, QCalendarWidget, QSpinBox, QDoubleSpinBox, QDateEdit, QTimeEdit
 from PyQt5.QtGui import QPixmap
-from PyQt5.QtCore import Qt, QBasicTimer, QDate
+from PyQt5.QtCore import Qt, QBasicTimer, QDate, QTime
 
-layoutOption = 'QDateEdit' # 'QPushButton', 'QLabel'. 'QCheckBox', 'QRadioButton', 'QComboBox', 'QLineEdit', 'QProgressBar', 'QSlider_QDial', 'QSplitter', 'QGroupBox', 'QTabWidget', 'QPixmap', 'QCalendarWidget', 'QSpinBox', 'QDoubleSpinBox'
+layoutOption = 'QTimeEdit' # 'QPushButton', 'QLabel'. 'QCheckBox', 'QRadioButton', 'QComboBox', 'QLineEdit', 'QProgressBar', 'QSlider_QDial', 'QSplitter', 'QGroupBox', 'QTabWidget', 'QPixmap', 'QCalendarWidget', 'QSpinBox', 'QDoubleSpinBox', 'QDateEdit'
 
 class MyApp(QWidget):
     def __init__(self):
@@ -272,6 +272,24 @@ class MyApp(QWidget):
 
             self.setLayout(vbox)
 
+        # chapter 05.17
+        elif(layoutOption == 'QTimeEdit'):
+            lbl = QLabel(layoutOption)
+
+            self.timeedit = QTimeEdit(self)
+            self.timeedit.setTime(QTime.currentTime())
+            self.timeedit.setTimeRange(QTime(3, 00, 00), QTime(23, 30, 00))
+            self.timeedit.setDisplayFormat('hh:mm:ss')
+            self.timer = QBasicTimer()
+            self.timer.start(1000, self)
+
+            vbox = QVBoxLayout()
+            vbox.addWidget(lbl)
+            vbox.addWidget(self.timeedit)
+            vbox.addStretch()
+
+            self.setLayout(vbox)
+            
             pass
     
         self.setWindowTitle(layoutOption)
@@ -420,6 +438,10 @@ class MyApp(QWidget):
     # chapter 05.15
     def value_changed_1(self):
         self.lbl2.setText('$ ' + str(self.dspinbox.value()))
+
+    # chapter 05.17
+    def timerEvent(self, e):
+        self.timeedit.setTime(QTime.currentTime())
 
 if __name__ == '__main__':
     app = QApplication(sys.argv)
