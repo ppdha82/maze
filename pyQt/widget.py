@@ -1,9 +1,10 @@
 import sys
-from PyQt5.QtWidgets import QApplication, QWidget, QPushButton, QVBoxLayout, QLabel, QCheckBox, QRadioButton, QComboBox, QLineEdit, QProgressBar, QDial, QSlider, QSplitter, QFrame, QHBoxLayout, QGroupBox, QGridLayout, QMenu, QTabWidget, QCalendarWidget, QSpinBox, QDoubleSpinBox
+from PyQt5.QtWidgets import QApplication, QWidget, QPushButton, QVBoxLayout, QLabel, QCheckBox, QRadioButton, QComboBox, QLineEdit, QProgressBar, QDial, QSlider, QSplitter, QFrame, QHBoxLayout, QGroupBox, QGridLayout, QMenu, QTabWidget, QCalendarWidget, QSpinBox, QDoubleSpinBox, QDateEdit
 from PyQt5.QtGui import QPixmap
 from PyQt5.QtCore import Qt, QBasicTimer, QDate
 
-layoutOption = 'QDoubleSpinBox' # 'QPushButton', 'QLabel'. 'QCheckBox', 'QRadioButton', 'QComboBox', 'QLineEdit', 'QProgressBar', 'QSlider_QDial', 'QSplitter', 'QGroupBox', 'QTabWidget', 'QPixmap', 'QCalendarWidget', 'QSpinBox'
+layoutOption = 'QDateEdit' # 'QPushButton', 'QLabel'. 'QCheckBox', 'QRadioButton', 'QComboBox', 'QLineEdit', 'QProgressBar', 'QSlider_QDial', 'QSplitter', 'QGroupBox', 'QTabWidget', 'QPixmap', 'QCalendarWidget', 'QSpinBox', 'QDoubleSpinBox'
+
 class MyApp(QWidget):
     def __init__(self):
         super().__init__()
@@ -250,6 +251,23 @@ class MyApp(QWidget):
             vbox.addWidget(self.lbl1)
             vbox.addWidget(self.dspinbox)
             vbox.addWidget(self.lbl2)
+            vbox.addStretch()
+
+            self.setLayout(vbox)
+
+        # chapter 05.16
+        elif(layoutOption == 'QDateEdit'):
+            lbl = QLabel(layoutOption)
+
+            dateedit = QDateEdit(self)
+            dateedit.setDate(QDate.currentDate())
+            dateedit.setMinimumDate(QDate(1900, 1, 1))
+            dateedit.setMaximumDate(QDate(2100, 12, 31))
+            # dateedit.setDateRange(QDate(1900, 1, 1), QDate(2100, 12, 31))
+
+            vbox = QVBoxLayout()
+            vbox.addWidget(lbl)
+            vbox.addWidget(dateedit)
             vbox.addStretch()
 
             self.setLayout(vbox)
