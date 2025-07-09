@@ -1,9 +1,9 @@
 import sys
-from PyQt5.QtWidgets import QApplication, QWidget, QPushButton, QVBoxLayout, QLabel, QCheckBox, QRadioButton, QComboBox, QLineEdit, QProgressBar, QDial, QSlider, QSplitter, QFrame, QHBoxLayout, QGroupBox, QGridLayout, QMenu, QTabWidget, QCalendarWidget, QSpinBox, QDoubleSpinBox, QDateEdit, QTimeEdit, QDateTimeEdit, QTextBrowser, QTextEdit
-from PyQt5.QtGui import QPixmap, QTextCursor
+from PyQt5.QtWidgets import QApplication, QWidget, QPushButton, QVBoxLayout, QLabel, QCheckBox, QRadioButton, QComboBox, QLineEdit, QProgressBar, QDial, QSlider, QSplitter, QFrame, QHBoxLayout, QGroupBox, QGridLayout, QMenu, QTabWidget, QCalendarWidget, QSpinBox, QDoubleSpinBox, QDateEdit, QTimeEdit, QDateTimeEdit, QTextBrowser, QTextEdit, QTableWidget, QAbstractItemView, QHeaderView, QTableWidgetItem
+from PyQt5.QtGui import QPixmap
 from PyQt5.QtCore import Qt, QBasicTimer, QDate, QTime, QDateTime
 
-layoutOption = 'QTextEdit' # 'QPushButton', 'QLabel'. 'QCheckBox', 'QRadioButton', 'QComboBox', 'QLineEdit', 'QProgressBar', 'QSlider_QDial', 'QSplitter', 'QGroupBox', 'QTabWidget', 'QPixmap', 'QCalendarWidget', 'QSpinBox', 'QDoubleSpinBox', 'QDateEdit', 'QTimeEdit', 'QDateTimeEdit', 'QTextBrowser'
+layoutOption = 'QTableWidget' # 'QPushButton', 'QLabel'. 'QCheckBox', 'QRadioButton', 'QComboBox', 'QLineEdit', 'QProgressBar', 'QSlider_QDial', 'QSplitter', 'QGroupBox', 'QTabWidget', 'QPixmap', 'QCalendarWidget', 'QSpinBox', 'QDoubleSpinBox', 'QDateEdit', 'QTimeEdit', 'QDateTimeEdit', 'QTextBrowser', 'QTextEdit'
 
 class MyApp(QWidget):
     def __init__(self):
@@ -343,6 +343,28 @@ class MyApp(QWidget):
             vbox.addStretch()
 
             self.setLayout(vbox)
+
+        # chapter 05.21
+        elif(layoutOption == 'QTableWidget'):
+            self.tableWidget = QTableWidget()
+            self.tableWidget.setRowCount(20)
+            self.tableWidget.setColumnCount(4)
+
+            self.tableWidget.setEditTriggers(QAbstractItemView.NoEditTriggers)
+            # self.tableWidget.setEditTriggers(QAbstractItemView.DoubleClicked)
+            # self.tableWidget.setEditTriggers(QAbstractItemView.AllEditTriggers)
+
+            self.tableWidget.horizontalHeader().setSectionResizeMode(QHeaderView.Stretch)
+            # self.tableWidget.horizontalHeader().setSectionresizeMode(QHeaderView.ResizeToContents)
+
+            for i in range(20):
+                for j in range(4):
+                    self.tableWidget.setItem(i, j, QTableWidgetItem(str(i + j)))
+
+            layout = QVBoxLayout()
+            layout.addWidget(self.tableWidget)
+            self.setLayout(layout)
+
             pass
     
         self.setWindowTitle(layoutOption)
