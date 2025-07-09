@@ -1,9 +1,9 @@
 import sys
-from PyQt5.QtWidgets import QApplication, QWidget, QPushButton, QVBoxLayout, QLabel, QCheckBox, QRadioButton, QComboBox, QLineEdit, QProgressBar, QDial, QSlider, QSplitter, QFrame, QHBoxLayout, QGroupBox, QGridLayout, QMenu, QTabWidget, QCalendarWidget, QSpinBox, QDoubleSpinBox, QDateEdit, QTimeEdit
+from PyQt5.QtWidgets import QApplication, QWidget, QPushButton, QVBoxLayout, QLabel, QCheckBox, QRadioButton, QComboBox, QLineEdit, QProgressBar, QDial, QSlider, QSplitter, QFrame, QHBoxLayout, QGroupBox, QGridLayout, QMenu, QTabWidget, QCalendarWidget, QSpinBox, QDoubleSpinBox, QDateEdit, QTimeEdit, QDateTimeEdit
 from PyQt5.QtGui import QPixmap
-from PyQt5.QtCore import Qt, QBasicTimer, QDate, QTime
+from PyQt5.QtCore import Qt, QBasicTimer, QDate, QTime, QDateTime
 
-layoutOption = 'QTimeEdit' # 'QPushButton', 'QLabel'. 'QCheckBox', 'QRadioButton', 'QComboBox', 'QLineEdit', 'QProgressBar', 'QSlider_QDial', 'QSplitter', 'QGroupBox', 'QTabWidget', 'QPixmap', 'QCalendarWidget', 'QSpinBox', 'QDoubleSpinBox', 'QDateEdit'
+layoutOption = 'QDateTimeEdit' # 'QPushButton', 'QLabel'. 'QCheckBox', 'QRadioButton', 'QComboBox', 'QLineEdit', 'QProgressBar', 'QSlider_QDial', 'QSplitter', 'QGroupBox', 'QTabWidget', 'QPixmap', 'QCalendarWidget', 'QSpinBox', 'QDoubleSpinBox', 'QDateEdit', 'QTimeEdit'
 
 class MyApp(QWidget):
     def __init__(self):
@@ -289,6 +289,24 @@ class MyApp(QWidget):
             vbox.addStretch()
 
             self.setLayout(vbox)
+
+        # chapter 05.18
+        elif(layoutOption == 'QDateTimeEdit'):
+            lbl = QLabel(layoutOption)
+
+            self.datetimeedit = QDateTimeEdit(self)
+            self.datetimeedit.setDateTime(QDateTime.currentDateTime())
+            self.datetimeedit.setDateTimeRange(QDateTime(1900, 1, 1, 00, 00, 00), QDateTime(2100, 1, 1, 00, 00, 00))
+            self.datetimeedit.setDisplayFormat('yyyy.MM.dd hh:mm:ss')
+            self.timer = QBasicTimer()
+            self.timer.start(1000, self)
+
+            vbox = QVBoxLayout()
+            vbox.addWidget(lbl)
+            vbox.addWidget(self.datetimeedit)
+            vbox.addStretch()
+
+            self.setLayout(vbox)
             
             pass
     
@@ -439,9 +457,12 @@ class MyApp(QWidget):
     def value_changed_1(self):
         self.lbl2.setText('$ ' + str(self.dspinbox.value()))
 
-    # chapter 05.17
+    # chapter 05.17, 05.18
     def timerEvent(self, e):
-        self.timeedit.setTime(QTime.currentTime())
+        if(layoutOption == 'QTimeEdit'):
+            self.timeedit.setTime(QTime.currentTime())
+        elif(layoutOption == 'QDateTimeEdit'):
+            self.datetimeedit.setDateTime(QDateTime.currentDateTime())
 
 if __name__ == '__main__':
     app = QApplication(sys.argv)
