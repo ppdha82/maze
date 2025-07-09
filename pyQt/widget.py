@@ -1,9 +1,9 @@
 import sys
-from PyQt5.QtWidgets import QApplication, QWidget, QPushButton, QVBoxLayout, QLabel, QCheckBox, QRadioButton, QComboBox, QLineEdit, QProgressBar, QDial, QSlider, QSplitter, QFrame, QHBoxLayout, QGroupBox, QGridLayout, QMenu, QTabWidget, QCalendarWidget, QSpinBox, QDoubleSpinBox, QDateEdit, QTimeEdit, QDateTimeEdit, QTextBrowser
+from PyQt5.QtWidgets import QApplication, QWidget, QPushButton, QVBoxLayout, QLabel, QCheckBox, QRadioButton, QComboBox, QLineEdit, QProgressBar, QDial, QSlider, QSplitter, QFrame, QHBoxLayout, QGroupBox, QGridLayout, QMenu, QTabWidget, QCalendarWidget, QSpinBox, QDoubleSpinBox, QDateEdit, QTimeEdit, QDateTimeEdit, QTextBrowser, QTextEdit
 from PyQt5.QtGui import QPixmap, QTextCursor
 from PyQt5.QtCore import Qt, QBasicTimer, QDate, QTime, QDateTime
 
-layoutOption = 'QTextBrowser' # 'QPushButton', 'QLabel'. 'QCheckBox', 'QRadioButton', 'QComboBox', 'QLineEdit', 'QProgressBar', 'QSlider_QDial', 'QSplitter', 'QGroupBox', 'QTabWidget', 'QPixmap', 'QCalendarWidget', 'QSpinBox', 'QDoubleSpinBox', 'QDateEdit', 'QTimeEdit', 'QDateTimeEdit'
+layoutOption = 'QTextEdit' # 'QPushButton', 'QLabel'. 'QCheckBox', 'QRadioButton', 'QComboBox', 'QLineEdit', 'QProgressBar', 'QSlider_QDial', 'QSplitter', 'QGroupBox', 'QTabWidget', 'QPixmap', 'QCalendarWidget', 'QSpinBox', 'QDoubleSpinBox', 'QDateEdit', 'QTimeEdit', 'QDateTimeEdit', 'QTextBrowser'
 
 class MyApp(QWidget):
     def __init__(self):
@@ -326,6 +326,23 @@ class MyApp(QWidget):
             vbox.addWidget(self.clear_btn, 2)
 
             self.setLayout(vbox)
+
+        # chapter 05.20
+        elif(layoutOption == 'QTextEdit'):
+            self.lbl1 = QLabel('Enter your sentence:')
+            self.te = QTextEdit()
+            self.te.setAcceptRichText(False)
+            self.lbl2 = QLabel('The number of words is 0. Total letter is 0.')
+
+            self.te.textChanged.connect(self.text_changed)
+
+            vbox = QVBoxLayout()
+            vbox.addWidget(self.lbl1)
+            vbox.addWidget(self.te)
+            vbox.addWidget(self.lbl2)
+            vbox.addStretch()
+
+            self.setLayout(vbox)
             pass
     
         self.setWindowTitle(layoutOption)
@@ -491,6 +508,11 @@ class MyApp(QWidget):
 
     def clear_text(self):
         self.tb.clear()
+
+    # chapter 05.20
+    def text_changed(self):
+        text = self.te.toPlainText()
+        self.lbl2.setText('The number of words is ' + str(len(text.split())) + '. Total letter is ' + str(len(text)) + '.')
 
 if __name__ == '__main__':
     app = QApplication(sys.argv)
