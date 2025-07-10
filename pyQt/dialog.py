@@ -1,8 +1,51 @@
 import sys
-from PyQt5.QtWidgets import QApplication, QWidget, QPushButton, QLineEdit, QInputDialog, QFrame, QColorDialog, QFontDialog, QVBoxLayout, QSizePolicy, QLabel
-from PyQt5.QtGui import QColor
+from PyQt5.QtWidgets import QApplication, QWidget, QPushButton, QLineEdit, QInputDialog, QFrame, QColorDialog, QFontDialog, QVBoxLayout, QSizePolicy, QLabel, QFileDialog, QMainWindow, QTextEdit, QAction
+from PyQt5.QtGui import QColor, QIcon
 
-layoutOption = 'QFontDialog'   # 'QInputDialog', 'QColorDialog'
+layoutOption = 'QFileDialog'   # 'QInputDialog', 'QColorDialog', 'QFontDialog'
+
+class MyApp1(QMainWindow):
+    def __init__(self):
+        super().__init__()
+        self.initUI()
+
+    def initUI(self):
+        # chapter 06.04
+        if(layoutOption == 'QFileDialog'):
+            self.textEdit = QTextEdit()
+            self.setCentralWidget(self.textEdit)
+            self.statusBar()
+
+            openFile = QAction(QIcon('open.png'), 'Open', self)
+            openFile.setShortcut('Ctrl + O')
+            openFile.setStatusTip('Open New File')
+            openFile.triggered.connect(self.showDialog)
+
+            menubar = self.menuBar()
+            menubar.setNativeMenuBar(False)
+            fileMenu = menubar.addMenu('&File')
+            fileMenu.addAction(openFile)
+
+            pass
+
+        self.setWindowTitle(layoutOption)
+        self.setGeometry(300, 300, 500, 200)
+        self.show()
+
+    # chapter 06.04
+    def showDialog(self):
+        fname = QFileDialog.getOpenFileName(self, 'Open file', './')
+
+        if fname[0]:
+            f = open(fname[0], 'r')
+
+            try:
+                with f:
+                    data = f.read()
+                    self.textEdit.setText(data)
+            except UnicodeDecodeError:
+                self.textEdit.setText('unable to read file')
+                pass
 
 class MyApp(QWidget):
     def __init__(self):
@@ -47,6 +90,7 @@ class MyApp(QWidget):
 
             vbox.addWidget(self.lbl)
             self.setLayout(vbox)
+
             pass
 
         self.setWindowTitle(layoutOption)
@@ -75,5 +119,8 @@ class MyApp(QWidget):
 
 if __name__ == '__main__':
     app = QApplication(sys.argv)
-    ex = MyApp()
+    if(layoutOption == 'QFileDialog'):
+        ex = MyApp1()
+    else:
+        ex = MyApp()
     sys.exit(app.exec_())
