@@ -1,8 +1,8 @@
 import sys
-from PyQt5.QtWidgets import QApplication, QWidget, QPushButton, QLineEdit, QInputDialog, QFrame, QColorDialog, QFontDialog, QVBoxLayout, QSizePolicy, QLabel, QFileDialog, QMainWindow, QTextEdit, QAction
+from PyQt5.QtWidgets import QApplication, QWidget, QPushButton, QLineEdit, QInputDialog, QFrame, QColorDialog, QFontDialog, QVBoxLayout, QSizePolicy, QLabel, QFileDialog, QMainWindow, QTextEdit, QAction, QMessageBox
 from PyQt5.QtGui import QColor, QIcon
 
-layoutOption = 'QFileDialog'   # 'QInputDialog', 'QColorDialog', 'QFontDialog'
+layoutOption = 'QMessageBox'   # 'QInputDialog', 'QColorDialog', 'QFontDialog', 'QFileDialog'
 
 class MyApp1(QMainWindow):
     def __init__(self):
@@ -91,6 +91,8 @@ class MyApp(QWidget):
             vbox.addWidget(self.lbl)
             self.setLayout(vbox)
 
+        # chapter 06.05
+        elif(layoutOption == 'QMessageBox'):
             pass
 
         self.setWindowTitle(layoutOption)
@@ -116,6 +118,15 @@ class MyApp(QWidget):
                 self.lbl.setFont(font)
                 self.fontInfo = font
             pass
+    
+    # chapter 06.05
+    def closeEvent(self, event):
+        reply = QMessageBox.question(self, 'Message', 'Are you sure to quit?', QMessageBox.Yes | QMessageBox.No, QMessageBox.No)
+
+        if reply == QMessageBox.Yes:
+            event.accept()
+        else:
+            event.ignore()
 
 if __name__ == '__main__':
     app = QApplication(sys.argv)
