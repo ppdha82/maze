@@ -1,12 +1,14 @@
 import sys
-from PyQt5.QtWidgets import QApplication, QWidget, QLCDNumber, QDial, QVBoxLayout, QHBoxLayout, QPushButton, QMessageBox
+from PyQt5.QtWidgets import QApplication, QWidget, QLCDNumber, QDial, QVBoxLayout, QHBoxLayout, QPushButton, QMessageBox, QLabel
 from PyQt5.QtCore import Qt
 
-layoutOption = 'Rebuilding_Event_Handler'  # 'Signal_and_Slot', 'Event_Handler'
+layoutOption = 'Rebuilding_Event_Handler2'  # 'Signal_and_Slot', 'Event_Handler', 'Rebuilding_Event_Handler'
 
 class MyApp(QWidget):
     def __init__(self):
         super().__init__()
+        self.color_index = 0
+        self.colors = ["background-color: red", "background-color: green", "background-color: blue", "background-color: white"]
         self.initUI()
 
     def initUI(self):
@@ -49,6 +51,18 @@ class MyApp(QWidget):
         elif layoutOption == 'Rebuilding_Event_Handler':
             pass
 
+        # chapter 07.04
+        elif layoutOption == 'Rebuilding_Event_Handler2':
+            x = 0
+            y = 0
+
+            self.text = 'x: {0}, y: {1}'.format(x, y)
+            self.label = QLabel(self.text, self)
+            self.label.move(20, 20)
+
+            self.setMouseTracking(True)
+            pass
+
         self.setWindowTitle(layoutOption)
         self.setGeometry(300, 300, 500, 200)
         self.show()
@@ -71,6 +85,23 @@ class MyApp(QWidget):
         elif e.key() == Qt.Key_N:
             self.showNormal()
 
+    # chapter 07.04
+    def mouseMoveEvent(self, e):
+        x = e.x()
+        y = e.y()
+
+        text = 'x: {0}, y: {1}'.format(x, y)
+        self.label.setText(text)
+        self.label.adjustSize()
+    
+    def mouseReleaseEvent(self, e):
+        if e.button() == Qt.LeftButton:
+            self.color_index = (self.color_index + 1) % len(self.colors)
+            self.setStyleSheet(self.colors[self.color_index])
+            if self.color_index == (len(self.colors) - 1):
+                self.label.setStyleSheet("color: black")
+            else:
+                self.label.setStyleSheet("color: white")
         pass
 
 if __name__ == '__main__':
