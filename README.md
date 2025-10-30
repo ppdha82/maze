@@ -11,44 +11,74 @@
 * Troubleshoot
   * python 버전(3.8)과 pip 버전(3.6)이 다를 경우 numpy 에러 발생
 
-Traceback (most recent call last):
-  File "/usr/lib/python3/dist-packages/numpy/core/__init__.py", line 16, in <module>
+    Traceback (most recent call last):
+    File "/usr/lib/python3/dist-packages/numpy/core/__init__.py", line 16, in <module>
     from . import multiarray
-ImportError: cannot import name 'multiarray' from partially initialized module 'numpy.core' (most likely due to a circular import) (/usr/lib/python3/dist-packages/numpy/core/__init__.py)
-
-During handling of the above exception, another exception occurred:
-
-Traceback (most recent call last):
-  File "maze.py", line 21, in <module>
+    ImportError: cannot import name 'multiarray' from partially initialized module 'numpy.core' (most likely due to a circular import) (/usr/lib/python3/dist-packages/numpy/core/__init__.py) 
+<br>
+    During handling of the above exception, another exception occurred:
+<br>
+    Traceback (most recent call last):
+    File "maze.py", line 21, in <module>
     from    scipy import integrate
-  File "/usr/lib/python3/dist-packages/scipy/__init__.py", line 61, in <module>
+    File "/usr/lib/python3/dist-packages/scipy/__init__.py", line 61, in <module>
     from numpy import show_config as show_numpy_config
-  File "/usr/lib/python3/dist-packages/numpy/__init__.py", line 142, in <module>
+    File "/usr/lib/python3/dist-packages/numpy/__init__.py", line 142, in <module>
     from . import add_newdocs
-  File "/usr/lib/python3/dist-packages/numpy/add_newdocs.py", line 13, in <module>
+    File "/usr/lib/python3/dist-packages/numpy/add_newdocs.py", line 13, in <module>
     from numpy.lib import add_newdoc
-  File "/usr/lib/python3/dist-packages/numpy/lib/__init__.py", line 8, in <module>
+    File "/usr/lib/python3/dist-packages/numpy/lib/__init__.py", line 8, in <module>
     from .type_check import *
-  File "/usr/lib/python3/dist-packages/numpy/lib/type_check.py", line 11, in <module>
+    File "/usr/lib/python3/dist-packages/numpy/lib/type_check.py", line 11, in <module>
     import numpy.core.numeric as _nx
-  File "/usr/lib/python3/dist-packages/numpy/core/__init__.py", line 26, in <module>
+    File "/usr/lib/python3/dist-packages/numpy/core/__init__.py", line 26, in <module>
     raise ImportError(msg)
-ImportError: 
-Importing the multiarray numpy extension module failed.  Most
-likely you are trying to import a failed build of numpy.
-If you're working with a numpy git repo, try `git clean -xdf` (removes all
-files not under version control).  Otherwise reinstall numpy.
+<br>
+    ImportError: 
+    Importing the multiarray numpy extension module failed.  Most
+    likely you are trying to import a failed build of numpy.
+    If you're working with a numpy git repo, try `git clean -xdf` (removes all
+    files not under version control).  Otherwise reinstall numpy.
+<br>
 
-Original error was: cannot import name 'multiarray' from partially initialized module 'numpy.core' (most likely due to a circular import) (/usr/lib/python3/dist-packages/numpy/core/__init__.py)
+    Original error was: cannot import name 'multiarray' from partially initialized module 'numpy.core' (most likely due to a circular import) (/usr/lib/python3/dist-packages/numpy/core/__init__.py)
+<br>
 
   * wxPython 설치
     * https://life-is-sad-or-bad.tistory.com/77
     * pip install wxPython
 
-Traceback (most recent call last):
-  File "maze.py", line 25, in <module>
-    import  wx
-ModuleNotFoundError: No module named 'wx'
+      Traceback (most recent call last):
+      File "maze.py", line 25, in <module>
+      import  wx
+      ModuleNotFoundError: No module named 'wx'
+<br>
 
   * scipy 설치
     * sudo apt install python3-scipy
+<br>
+
+#### venv 사용법
+  * window
+    * powershell 환경에서는 활성화가 안되어 command shell 에서 진행함
+    * 가상 환경 생성 명령어
+      * python -m venv ${가상환경 이름}
+        ex) python -m venv pyQt_venv
+    * 가상 환경 활성화
+      * ${가상환경 이름}\Scripts\activate
+        ex) pyQt_venv\Scripts\activate
+<br>
+
+#### PyQt5 설치 방법
+  * from PyQt5.QtWidgets import QWidget, QApplication
+     ModuleNotFoundError: No module named 'PyQt5'
+     위와 같은 에러 문구가 나오면 PyQt5 설치되지 않아 발생하는 문제이므로 PyQt5를 설치해야 함
+  * 설치 명령어 실행
+    * pip install PyQt5
+<br>
+
+#### numpy 설치 방법
+  * ModuleNotFoundError: No module named 'numpy'
+     위와 같은 에러 문구가 나오면 numpy 설치되지 않아 발생하는 문제이므로 numpy를 설치해야 함
+  * 설치 명령어 실행
+    * pip install numpy
